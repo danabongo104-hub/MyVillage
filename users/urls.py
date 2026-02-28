@@ -4,8 +4,6 @@ from . import views
 
 urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
-
-    # simplejwt ships these views out of the box
     # login returns access + refresh tokens
     # refresh swaps an old refresh token for a new access token
     path('login/', TokenObtainPairView.as_view(), name='login'),

@@ -37,10 +37,6 @@ class UserSerializer(serializers.ModelSerializer):
     parent_profile = ParentProfileSerializer(read_only=True)
     therapist_profile = TherapistProfileSerializer(read_only=True)
 
-    # SerializerMethodField lets us compute a value that doesn't
-    # exist as a direct model field. followers.count() is a database
-    # aggregation — we calculate it here rather than storing it as
-    # a column, because stored counts go stale and cause data inconsistency.
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
 
@@ -76,15 +72,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True,
         required=True,
         validators=[validate_password]
-        # validate_password enforces Django's built-in password rules:
-        # minimum length, not too common, not entirely numeric.
-        # write_only=True means password NEVER appears in any response.
-        # This is non-negotiable for security.
+        
     )
     password2 = serializers.CharField(write_only=True, required=True)
 
-    # These are optional at the top level — a parent won't send
-    # therapist_profile data and vice versa.
     parent_profile = ParentProfileSerializer(required=False)
     therapist_profile = TherapistProfileSerializer(required=False)
 

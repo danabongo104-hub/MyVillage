@@ -4,7 +4,7 @@ from users.serializers import UserSerializer
 
 
 class NotificationSerializer(serializers.ModelSerializer):
-    # We nest the full sender object so the frontend knows
+    # Nested the full sender object so the frontend knows
     # exactly who triggered the notification without
     # making a second API call to look up the user.
     sender = UserSerializer(read_only=True)

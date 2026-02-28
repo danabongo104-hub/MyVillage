@@ -24,9 +24,6 @@ class MarkNotificationReadView(APIView):
             notification.save()
             return Response({"status": "marked as read"})
         except Notification.DoesNotExist:
-            # we use DoesNotExist instead of 404 here intentionally —
-            # we don't want to confirm whether a notification id exists
-            # to a user who doesn't own it
             return Response(
                 {"error": "Notification not found."},
                 status=404

@@ -49,10 +49,6 @@ class PostSerializer(serializers.ModelSerializer):
         return obj.comments.count()
 
     def get_is_liked_by_user(self, obj):
-        # We access the request from context — DRF passes the request
-        # into serializer context automatically when called from a view.
-        # This is why we never pass user data as a field —
-        # we read it from the authenticated request instead.
         request = self.context.get('request')
         if request and request.user.is_authenticated:
             return obj.likes.filter(user=request.user).exists()
